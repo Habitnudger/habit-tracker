@@ -1,4 +1,6 @@
 name: Capture Done Taps
+permissions:
+  contents: write
 
 on:
   schedule:
