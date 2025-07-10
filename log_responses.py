@@ -40,7 +40,7 @@ if rows_to_add:
 # commit & push if anything changed
 if rows_to_add:
     subprocess.run(["git", "config", "--global", "user.email", "bot@github"], check=True)
-    subprocess.run(["git", "config", "--global", "user.name", "GitHub Actions"], check=True)
+    subprocess.run(["git", "config", "--global", "user.name",  "GitHub Actions"], check=True)
     subprocess.run(["git", "add", LOG_PATH, OFFSET_FILE], check=True)
-    subprocess.run(["git", "commit", "-m", f'Add {len(rows_to_add)} check-ins'], check=True)
-    subprocess.run(["git", "push", f"https://x-access-token:{GITHUB_TOKEN}@github.com/{os.getenv('GITHUB_REPOSITORY')}.git",
+    subprocess.run(["git", "commit", "-m", f"Add {len(rows_to_add)} check-ins"], check=True)
+    subprocess.run(["git", "push", "origin", "HEAD"], check=True)   # simple & safe
