@@ -1,0 +1,25 @@
+name: Weekly Summary
+permissions:
+  contents: read        # only needs to read log.csv
+
+on:
+  schedule:
+    - cron: '5 21 * * SUN'   # every Sunday 21:05 UTC
+  workflow_dispatch:         # manual run button
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install requests
+
+      - run: python weekly_summary.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID:        ${{ secrets.CHAT_ID }}
