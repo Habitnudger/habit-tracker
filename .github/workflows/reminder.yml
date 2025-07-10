@@ -1,0 +1,29 @@
+name: Habit Reminder
+
+on:
+  schedule:
+    - cron: '0 8  * * *'    # 08:00
+    - cron: '0 12 * * *'    # 12:00 (noon)  ← change to 0 0 * * * for midnight
+    - cron: '0 15 * * *'    # 15:00
+    - cron: '0 18 * * *'    # 18:00
+    - cron: '0 21 * * *'    # 21:00
+  workflow_dispatch:        # lets you press “Run workflow” anytime
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python deps
+        run: pip install requests python-dotenv
+
+      - name: Send Telegram ping
+        run: python send_reminder.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID:       ${{ secrets.CHAT_ID }}
